@@ -14,6 +14,7 @@
 		B1C7143625E6254D008EBD2F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C7143425E6254D008EBD2F /* LaunchScreen.storyboard */; };
 		B1C7144025E62B44008EBD2F /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C7143F25E62B44008EBD2F /* TableViewController.swift */; };
 		B1C7144325E62C50008EBD2F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C7144225E62C50008EBD2F /* Model.swift */; };
+		B1C7144625E64688008EBD2F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B1C7144525E64688008EBD2F /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		B1C7143725E6254D008EBD2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1C7143F25E62B44008EBD2F /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B1C7144225E62C50008EBD2F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		B1C7144525E64688008EBD2F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		B1C7142825E6254B008EBD2F /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
+				B1C7144525E64688008EBD2F /* README.md */,
 				B1C7142925E6254B008EBD2F /* AppDelegate.swift */,
 				B1C7142B25E6254B008EBD2F /* SceneDelegate.swift */,
 				B1C7142F25E6254B008EBD2F /* Main.storyboard */,
@@ -129,6 +132,7 @@
 			files = (
 				B1C7143625E6254D008EBD2F /* LaunchScreen.storyboard in Resources */,
 				B1C7143325E6254D008EBD2F /* Assets.xcassets in Resources */,
+				B1C7144625E64688008EBD2F /* README.md in Resources */,
 				B1C7143125E6254B008EBD2F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

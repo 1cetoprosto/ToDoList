@@ -11,8 +11,25 @@ class TableViewController: UITableViewController {
 
     
     @IBAction func pushAddItem(_ sender: Any) {
-        addItem(nameItem: "New Item")
-        tableView.reloadData()
+        let alertController = UIAlertController(title: "Create new task", message: nil, preferredStyle: .alert)
+        
+        alertController.addTextField { (textField) in
+            textField.placeholder = "New task"
+        }
+        let alertAction1 = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+        }
+        
+        let alertAction2 = UIAlertAction(title: "Create", style: .destructive) { (alert) in
+            //Добавить новую запись
+            let newItem = alertController.textFields![0].text
+            addItem(nameItem: newItem ?? "Empty task")
+            self.tableView.reloadData()
+        }
+        
+        alertController.addAction(alertAction1)
+        alertController.addAction(alertAction2)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -41,7 +58,15 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        cell.textLabel?.text = toDoItems[indexPath.row]
+        let currentItem = toDoItems[indexPath.row]
+        
+        cell.textLabel?.text = currentItem["Name"] as? String ?? "Пустое задание"
+        
+        if currentItem["isCompleted"] as? Bool ?? true {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         return cell
     }
     
@@ -53,7 +78,17 @@ class TableViewController: UITableViewController {
         return true
     }
     
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if changeState(at: indexPath.row) {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }
+        else{
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        }
+        
+    }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
