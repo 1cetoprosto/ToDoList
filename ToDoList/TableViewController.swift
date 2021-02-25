@@ -8,7 +8,11 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-
+    
+    
+    @IBAction func pushEditAction(_ sender: Any) {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+    }
     
     @IBAction func pushAddItem(_ sender: Any) {
         let alertController = UIAlertController(title: "Create new task", message: nil, preferredStyle: .alert)
@@ -16,6 +20,7 @@ class TableViewController: UITableViewController {
         alertController.addTextField { (textField) in
             textField.placeholder = "New task"
         }
+        
         let alertAction1 = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
         }
         
@@ -34,43 +39,53 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tableView.tableFooterView = UIView()
+        tableView.backgroundColor = UIColor.secondarySystemBackground
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return toDoItems.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
+        
         let currentItem = toDoItems[indexPath.row]
         
         cell.textLabel?.text = currentItem["Name"] as? String ?? "Пустое задание"
         
+        let textItem: String = tableView.cellForRow(at: indexPath)?.textLabel?.text ?? "Пустое задание"
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: textItem)
+        
         if currentItem["isCompleted"] as? Bool ?? true {
             cell.accessoryType = .checkmark
+            
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
         } else {
             cell.accessoryType = .none
+            
+            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
         }
+        tableView.cellForRow(at: indexPath)?.textLabel?.attributedText = attributeString
         return cell
     }
     
-
+    
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -81,13 +96,22 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        let textItem: String = tableView.cellForRow(at: indexPath)?.textLabel?.text ?? "Пустое задание"
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: textItem)
+        
         if changeState(at: indexPath.row) {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
         }
         else{
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
+            
+            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
         }
-        
+        tableView.cellForRow(at: indexPath)?.textLabel?.attributedText = attributeString
     }
     
     // Override to support editing the table view.
@@ -100,30 +124,32 @@ class TableViewController: UITableViewController {
         }    
     }
     
-
-    /*
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        
+        moveItem(fromIndex: fromIndexPath.row, toIndex: to.row)
+        
+        tableView.reloadData()
     }
-    */
-
+    
+    
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
